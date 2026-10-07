@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="api-base-url" content="">
+    <title>Academic Paraphrasing & Plagiarism Checker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-shell">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+
+        <div class="container">
+            <header>
+                <div class="header-top">
+                    <div class="brand-badge"><i class="fas fa-sparkles"></i> AI Academic Toolkit</div>
+                    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                        <span>Dark mode</span>
+                    </button>
+                </div>
+                <h1><i class="fas fa-graduation-cap"></i> Academic Assistant</h1>
+                <p>Paraphrase your writing with AI and compare two texts for similarity.</p>
+                <p class="service-status" id="service-status" role="status" aria-live="polite">Connecting to services...</p>
+            </header>
+
+            <div class="feature-strip">
+                <div class="feature-card">
+                    <span class="feature-icon"><i class="fas fa-pen-nib"></i></span>
+                    <div>
+                        <h3>Academic Rewriting</h3>
+                        <p>Clear, polished, and more original phrasing.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon"><i class="fas fa-search-plus"></i></span>
+                    <div>
+                        <h3>Similarity Insights</h3>
+                        <p>Detailed similarity reports and match review.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon"><i class="fas fa-bolt"></i></span>
+                    <div>
+                        <h3>Fast Results</h3>
+                        <p>Instant output with clean, readable analysis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="paraphrase">
+                    <i class="fas fa-sync-alt"></i> Paraphrase
+                </button>
+                <button class="tab-btn" data-tab="plagiarism">
+                    <i class="fas fa-search"></i> Text Similarity
+                </button>
+            </div>
+
+        <div class="tab-content active" id="paraphrase-tab">
+            <div class="input-container">
+                <h2><i class="fas fa-pencil-alt"></i> Original Text</h2>
+                <p class="analysis-disclaimer">Paraphrasing sends your text to Google Gemini. Do not submit sensitive information.</p>
+                <textarea id="original-text" maxlength="12000" placeholder="Paste your text here to paraphrase..."></textarea>
+                <div class="word-count">Words: <span id="original-word-count">0</span></div>
+                <button id="paraphrase-btn" class="action-btn">
+                    <i class="fas fa-magic"></i> Paraphrase
+                </button>
+            </div>
+            
+            <div class="output-container">
+                <h2><i class="fas fa-feather-alt"></i> Paraphrased Text</h2>
+                <div id="loading-paraphrase" class="loading-spinner hidden">
+                    <i class="fas fa-spinner fa-spin"></i> Processing...
+                </div>
+                <div id="paraphrased-text" class="result-box"></div>
+                <div class="word-count">Words: <span id="paraphrased-word-count">0</span></div>
+                <button id="copy-paraphrased" class="secondary-btn">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="plagiarism-tab">
+            <div class="plagiarism-container">
+                <div class="input-group">
+                    <h2><i class="fas fa-file-alt"></i> Original Text</h2>
+                    <textarea id="plagiarism-original" maxlength="12000" placeholder="Paste the original text here..."></textarea>
+                </div>
+                <div class="input-group">
+                    <h2><i class="fas fa-file-alt"></i> Comparison Text</h2>
+                    <textarea id="plagiarism-comparison" maxlength="12000" placeholder="Paste the text to check against..."></textarea>
+                </div>
+                <button id="check-plagiarism-btn" class="action-btn">
+                    <i class="fas fa-search"></i> Compare Texts
+                </button>
+                
+                <div class="plagiarism-result">
+                    <h2><i class="fas fa-chart-pie"></i> Text Similarity Analysis</h2>
+                    <p class="analysis-disclaimer">This compares only the two texts you provide; it does not search online sources or determine plagiarism.</p>
+                    <div id="loading-plagiarism" class="loading-spinner hidden">
+                        <i class="fas fa-spinner fa-spin"></i> Analyzing...
+                    </div>
+                    <div class="result-container">
+                        <div class="score-container">
+                            <div class="score-circle">
+                                <span id="plagiarism-score">0%</span>
+                            </div>
+                            <p>Similarity Score</p>
+                        </div>
+                        <div id="plagiarism-analysis" class="analysis-box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <footer>
+                <p>© 2026 Academic Assistant | Made With Love by Rupesh <span class="heart">❤️</span></p>
+            </footer>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <div class="toast-content">
+            <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+            <div class="message">
+                <span class="text text-1" id="toast-title">Success</span>
+                <span class="text text-2" id="toast-message"></span>
+            </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+    </div>
+
+    <script src="script.js?v=full-functionality"></script>
+</body>
+</html>
